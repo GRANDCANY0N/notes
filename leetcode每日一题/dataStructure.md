@@ -40,6 +40,25 @@ hash.merge(num[i], 1, Integer::sum);
 map.computeIfAbsent(nums[i], k -> new ArrayList<>()).add(i);
 ```
 
+# TreeMap
+
+TreeMap和HashMap的区别是：
+
+TreeMap的key都是有序的，HashMap的key是无序的
+
+TreeMap的查找index时间是**`O(logn)`**，HashMap的查找index时间**`O(1)`**
+
+TreeMap底层基于是基于红黑树，HashMap底层基于数组+链表+红黑树
+
+```java
+//基础方法和HashMap大差不差
+TreeMap<Integer, Integer> treeMap = new TreeMap<>();
+
+treeMap.put(3,1);
+```
+
+
+
 # ArrayList
 
 ```java
@@ -166,6 +185,13 @@ Integer[] arr = nums.toArray(Integer[]::new);
 char[] ch = s.toCharArray();
 
 //数组原地排序
-Arrays.sort([数组], [start index], [end index])
+Arrays.sort([数组], [start index], [end index]);
+
+//数组装箱
+Arrays.stream(nums).boxed().toArray(Integer[]::new);    
 ```
+
+
+
+
 
