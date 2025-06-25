@@ -1,5 +1,7 @@
 # HashMap
 
+### 基础方法
+
 ``` java
 HashMap<Integer, String> hash = new HashMap<>();
 //put方法往哈希表中加入数据
@@ -39,6 +41,10 @@ hash.merge(num[i], 1, Integer::sum);
 //使用hashMap存储一个值及其对应的索引，索引放在列表中，computeIfAbsent是如果不存在列表则新建一个列表
 map.computeIfAbsent(nums[i], k -> new ArrayList<>()).add(i);
 ```
+
+### equals和hashcode
+
+
 
 # TreeMap
 
