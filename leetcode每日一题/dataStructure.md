@@ -1,6 +1,6 @@
 # HashMap
 
-### 基础方法
+## 基础方法
 
 ``` java
 HashMap<Integer, String> hash = new HashMap<>();
@@ -42,9 +42,152 @@ hash.merge(num[i], 1, Integer::sum);
 map.computeIfAbsent(nums[i], k -> new ArrayList<>()).add(i);
 ```
 
-### equals和hashcode
+## 底层
+
+## equals()和hashCode()
+
+### equals()方法
+
+默认情况下,`equals()`比较的是对象的引用地址，也就是栈中地址值，但是每次new一个对象的地址是不一样的，但是大多时候我们都是需要比较地址对应的值是否一样，因此直接使用`equals()`会有问题
+
+```java
+public class Packet{
+    int source,destination,timestamp ;
+    public Packet(int source, int destination, int timestamp){
+        this.source = source;
+        this.destination = destination;
+        this.timestamp = timestamp;
+	}
+    public static void main(String[] args) {
+        Packet p1 = new Packet(1,1,1);
+        Packet p2 = new Packet(1,1,1);
+        //这里比较的是栈中的地址值
+        System.out.println(p1.equals(p2));//false
+    }
+}
+
+```
+
+![image-20250626112935685](dataStructure.assets/image-20250626112935685.png)
+
+### 重写equals()方法
+
+大部分情况我们都是需要比较值是否一致，而不是根据引用。例如，对于 `String` 类，我们希望只要两个字符串的内容相同，就认为它们相等。 这时，我们就需要 *重写* `equals()` 方法。
+
+```java
+int a = 123;
+int b = 123;
+String str1 = "abc";
+String str2 = "abc";
+
+//基础类型的变量直接存放栈中，比较值，没有equal方法
+system.out.println(a==b);//true
+
+//String重写equals方法，比较hashCode和值
+system.out.println(str1.equals(str2));//true
+```
+
+**重写`equals()`** 
+
+1. `this`和`obj`分别表示p1和p2的引用地址，如果地址相同则值一定相同，性能优化
+2. 如果p2的地址为空或者p2和p1都不是一个类也没必要比较，直接返回false
+3. 最后逐一参数的值进行比较，全部相同才返回true
+
+```java
+import java.util.Objects;
+ 
+class Person {
+    private String name;
+    private int age;
+ 
+    public Person(String name, int age) {
+        this.name = name;
+        this.age = age;
+    }
+ 
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (obj == null || getClass() != obj.getClass()) return false;
+        Person person = (Person) obj;
+        return age == person.age && Objects.equals(name, person.name);
+    }
+ 
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, age);
+    }
+    
+    public static void main(String[] args) {
+        Person p1 = new Person("zhangsan",18);
+        Person p2 = new Person("zhangsan",18);
+        //全部值相等
+        System.out.println(p1.equals(p2));//true
+    }
+}
+```
+
+**注：**
+
+基本类型直接使用值比较，引用类型使用`Objects.equals()`
+
+由于a，b本质上还是`String`类，所以`a.equals(b)`会变成`String`类的比较
+
+`String`类已经重写了`equals()`方法，所以是值的比较
+
+```java
+public static boolean equals(Object a, Object b) {
+    return (a == b) || (a != null && a.equals(b));
+}
+```
+
+### hashCode()方法
+
+`hashCode()`方法用于返回对象的哈希码值。默认情况下，`Object` 类的 `hashCode()` 方法通常（但不保证）返回基于对象 *内存地址* 的一个整数值。用于在哈希表（例如 `HashMap`、`HashSet`）中快速查找对象。
+
+```java
+String s = "hello";
+// 哈希码，可能是 99162322
+int hash = s.hashCode(); 
+```
+
+### 重写hashCode()
+
+```java
+@Override
+public int hashCode(){
+    return Objects.hash(name,age);
+}
+```
+
+### java关于hashCode的约定
+
+- 只要对象的 `equals` 方法的比较操作所用到的信息没有被修改，那么对这同一个对象调用多次，`hashCode` 方法都必须始终如一地返回同一个整数。
+- 对象相等，hashCode一定相等
+- hashCode相等，对象不一定相等(例如在一个桶里，但是值不一样)
+
+### **为什么需要同时重写 `equals()` 和 `hashCode()`**
+
+以上述`person`类为例，没有重写`hashCode()`方法，两个对象的hashCode并不一样，但是值却是一样的
+
+使用`hashSet`，发现由于`hashCode`不同，最后两个对象放入的**桶**也会不同，因此造成值明明一样，但是`set`仍然存放了两个`person`对象
+
+```java
+Person p1 = new Person("zhangsan", 18);
+Person p2 = new Person("zhangsan", 18);
+
+System.out.println(p1.hashCode());     // 189568618
+System.out.println(p2.hashCode());     // 793589513
+
+Set<Person> set = new HashSet<>();
+set.add(p1);
+set.add(p2);
+System.out.println(set.size()); //输出2
+```
 
 
+
+## 问题
 
 # TreeMap
 
@@ -81,6 +224,23 @@ people.sort(Comparator.comparingInt(p -> p.age));
 //list配合map使用 如果是新值则新建一个ArrayList并将索引放入list中， lambda表达式,
 map.computeIfAbsent(nums[i], k -> new ArrayList<>()).add(i);
 ```
+
+# LinkList
+
+链表，可以指定从头部或者尾部插入数据
+
+相较于列表，可以直接打造有序，省去排序的时间
+
+```java
+LinkedList<Integer> list = new LinkedList<>();
+//从尾部插入数据
+list.addLast(2);
+
+//从头部插入数据
+list.addFirst(1);
+```
+
+
 
 # String
 
