@@ -108,7 +108,7 @@ master分支一般是**稳定**的分支，代码开发时可以参照环境配�
 ### 补充
 
 ```shell
-#拉取远程分支 rebese叠加提交
+#拉取远程分支 rebase叠加提交
 git pull origin master --rebase
 
 #出现git push rejected
@@ -118,11 +118,32 @@ git pull --rebase
 #pull不允许覆盖本地文件
 ```
 
+### 具体问题
 
+#### 1、本地文件路径和文件名称与远程一致，但是远程是最新版
 
+##### **舍弃本地未提交的修改，保留远程版本**
 
+```shell
+# 丢弃本地所有未提交的更改（不影响已 commit 的内容）
+git reset --hard HEAD    
 
+# 拉取远程
+git pull origin master      
+```
 
+##### **本地代码已经commit到本地仓库**
+
+```shell
+# 拉取远程
+git pull origin master     
+```
+
+`IDEA`会将一样的文件的两个版本放在一起，选择需要保留的版本，删除多余的git信息重新提交
+
+`=======`到`>>>>>>> 3a1c7278b32071482eb9acf0193b8029c31ac2d6`是远程版本
+
+`IEDA`的`commit`提供了`resolve`快捷解决方法，可以选择保留`left`(本地版本)和`right`(远程版本)
 
 
 
