@@ -118,9 +118,15 @@ git pull --rebase
 #pull不允许覆盖本地文件
 ```
 
+### Rebase（待完善）
+
+`Rebase`本意上是将当前分支的基于主分支断点之后的新增分支一份一份复制到主分支之后，当中在解决冲突之后继续提交
+
+![image-20250714210748772](git.assets/image-20250714210748772.png)
+
 ### 具体问题
 
-#### 1、本地文件路径和文件名称与远程一致，但是远程是最新版
+#### 1、本地文件路径和文件名称与远程一致，但是远程是最新版（只有一个主分支）
 
 ##### **舍弃本地未提交的修改，保留远程版本**
 
@@ -145,5 +151,22 @@ git pull origin master
 
 `IEDA`的`commit`提供了`resolve`快捷解决方法，可以选择保留`left`(本地版本)和`right`(远程版本)
 
+#### 2、同文件commit本地是最新版，将本地提交到远程（只有一个主分支）
 
+```shell
+#先保证代码commit到本地仓库
+git add .
+git commit -m "备注"
+
+#直接从远程拉取,--rebase 将本地新分支加到master分支后面然后开始解决冲突
+git pull origin master --rebase
+
+##resolve解决冲突，推荐点merge解决冲突
+
+#解决之后如果还有冲突继续continue
+git rebase --continue
+
+#最后提交
+git push origin master
+```
 

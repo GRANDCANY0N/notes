@@ -321,10 +321,10 @@ sb.deleteCharAt(0);
 
 
 
-# SrtingBuilderd
+# SrtingBuilder
 
 ```java
-//字符串拼接使用stringbuilder,append方法将要拼接的字符放到当前字符串后面，避免使用a+b
+//字符串拼接使用stringBuilder,append方法将要拼接的字符放到当前字符串后面，避免使用a+b
 StringBuilder sb = new StringBuilder();
 sb.append("a");
 sb.toString();
@@ -332,6 +332,9 @@ sb.toString();
 //根据索引删除StringBuilder中的内容，但是注意sb是会动态维护的
 //在循环中每一次删除最左边的值
 sb.deleteChatAt(0);
+
+//清空stringBuilder
+sb.setLength(0);
 ```
 
 ![img](dataStructure.assets/image-20250501113738540.png)
@@ -353,7 +356,7 @@ char[] ch = s.toCharArray();
 //数组原地排序
 Arrays.sort([数组], [start index], [end index]);
 
-//数组装箱
+//数组装箱,int[]转为Integer[]
 Arrays.stream(nums).boxed().toArray(Integer[]::new);    
 ```
 
