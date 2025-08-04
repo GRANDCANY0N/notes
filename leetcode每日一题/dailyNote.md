@@ -1,8 +1,6 @@
 # 持续学习是重中之重--坚持
 
-## day-1---03/11
-
-[135. 分发糖果](https://leetcode.cn/problems/candy/)（困难）
+## [135. 分发糖果](https://leetcode.cn/problems/candy/)（困难）
 
 ##### 原本思路：
 
@@ -17,9 +15,7 @@
 
 倒序比较时与之前的所在索引处的糖果数进行比较，保留较大的那个值
 
-## day-2---03/12
-
-[3305. 元音辅音字符串计数 I](https://leetcode.cn/problems/count-of-substrings-containing-every-vowel-and-k-consonants-i/)（中等）
+## [3305. 元音辅音字符串计数 I](https://leetcode.cn/problems/count-of-substrings-containing-every-vowel-and-k-consonants-i/)（中等）
 
 ##### 原本思路：
 
@@ -37,9 +33,7 @@
 
 Hash优化
 
-## day-3---03/13
-
-[1. 两数之和](https://leetcode.cn/problems/two-sum/)
+## [1. 两数之和](https://leetcode.cn/problems/two-sum/)
 
 ##### 原本思路：
 
@@ -72,9 +66,7 @@ return new int[]{hash.get(target - nums[i]),i};
 
 不存在则将nums[i]和i按照key-value的形式存入哈希表
 
-## day-4---03/14
-
-[1512. 好数对的数目](https://leetcode.cn/problems/number-of-good-pairs/)
+## [1512. 好数对的数目](https://leetcode.cn/problems/number-of-good-pairs/)
 
 ##### 原本思路：
 
@@ -90,9 +82,7 @@ collection<Integer> va = hash.value();
 
 对上一步每个得出来的和进行最后的求和
 
-## day-5---03/17
-
-[128. 最长连续序列](https://leetcode.cn/problems/longest-consecutive-sequence/)
+## [128. 最长连续序列](https://leetcode.cn/problems/longest-consecutive-sequence/)
 
 ##### 学习思路：
 
@@ -123,9 +113,7 @@ currentStreak = Math.max(currentStreak, y-x);
 
 得出最大的序列长度
 
-## day-6---03/18
-
-[2610. 转换二维数组](https://leetcode.cn/problems/convert-an-array-into-a-2d-array-with-conditions/)
+## [2610. 转换二维数组](https://leetcode.cn/problems/convert-an-array-into-a-2d-array-with-conditions/)
 
 ##### 原本思路：
 
@@ -147,11 +135,7 @@ for(Map.Entry<Integer, Integer> entry:hash.entrySet()){
 
 因为所有key在hashMap中的value一定>=1，每次遍历将所有key的value-1，如果value=0则删除这个key
 
-## day-7---03/25
-
-[3446. 按对角线进行矩阵排序](https://leetcode.cn/problems/sort-matrix-by-diagonals/)
-
-[2711. 对角线上不同值的数量差](https://leetcode.cn/problems/difference-of-number-of-distinct-values-on-diagonals/)
+## [3446. 按对角线进行矩阵排序](https://leetcode.cn/problems/sort-matrix-by-diagonals/)&[2711. 对角线上不同值的数量差](https://leetcode.cn/problems/difference-of-number-of-distinct-values-on-diagonals/)
 
 ##### 学习思路：
 
@@ -207,8 +191,6 @@ for(int k=1; k<column+row; k++){ //k是斜线
 
 再从这条对角线**从下至上**方向开始遍历，将每个点的**下半斜线**不同值的个数与上半斜线不同值的个数相减求绝对值
 
-## day-8---03/26
-
 [231. 2 的幂](https://leetcode.cn/problems/power-of-two/)
 
 ```java
@@ -233,9 +215,7 @@ char[] ch = s.toCharArray();//将字符串中的字符存入数组
 maxScore = Math.max(leftScore+rightScore,maxScore);
 ```
 
-## day-9---04/08
-
-[3396. 使数组元素互不相同所需的最少操作次数](https://leetcode.cn/problems/minimum-number-of-operations-to-make-elements-in-array-distinct/)
+## [3396. 使数组元素互不相同所需的最少操作次数](https://leetcode.cn/problems/minimum-number-of-operations-to-make-elements-in-array-distinct/)
 
 ##### **原本思路：**
 
@@ -266,9 +246,7 @@ for(int i=nums.length-1;i>=0;i--){
 }
 ```
 
-## day-10---04/09
-
-[3375. 使数组的值全部为 K 的最少操作次数](https://leetcode.cn/problems/minimum-operations-to-make-array-values-equal-to-k/)
+## [3375. 使数组的值全部为 K 的最少操作次数](https://leetcode.cn/problems/minimum-operations-to-make-array-values-equal-to-k/)
 
 ##### 思路：
 
@@ -277,7 +255,27 @@ for(int i=nums.length-1;i>=0;i--){
 
 本质上这题是判断严格大于k的不同数的个数
 
+## [2141. 同时运行 N 台电脑的最长时间](https://leetcode.cn/problems/maximum-running-time-of-n-computers/)
 
+**思路：**
+
+根据题目意思，本质上只要找到一个最大的时间数`P`，满足`k`台电脑能同时在`p`分钟内运行
+
+想办法填满这个`p*k`的矩阵，且每一行不能使用相同的一块电池
+
+**巧解：**
+
+首先考虑使用二分，最好情况是每个电池使用时间都相同且电池数量能整除电脑数，此时的运行时间为`sum(batteries)/n`，最坏情况是电池数小于电脑数，无法满足所有电脑同时充电
+
+在范围`[0,sum(batteries)/n]`二分确定时间`p`，对于给定时间`p`，将所有的电池进行分类
+
+对于大于等于`p`的电池，使用`p`分钟填满一列矩阵，剩余的舍弃，因为同一行不能出现相同颜色的电池
+
+对于小于`p`的电池，只需要考虑小于`p`的电池和是否足够填充剩下的矩阵，因为本身不满足填满一整列，不会出现同一行出现相同颜色的情况
+
+简洁写法是对`p`和`batteries[i]`进行比较，取较小的部分相加最后判断`sum`是否大于等于`p*k`即可
+
+![img](dailyNote.assets/1642313940-engFNq-image.png)
 
 
 

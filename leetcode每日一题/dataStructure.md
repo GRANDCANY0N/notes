@@ -40,6 +40,10 @@ hash.merge(num[i], 1, Integer::sum);
 
 //使用hashMap存储一个值及其对应的索引，索引放在列表中，computeIfAbsent是如果不存在列表则新建一个列表
 map.computeIfAbsent(nums[i], k -> new ArrayList<>()).add(i);
+
+//hashMap基础类型深拷贝 (两个互不干扰的hashMap)
+//如果hashMap存储的为对象例如list，则是浅拷贝
+HashMap<Integer,Integer> cloneMap = new HashMap<>(map);
 ```
 
 ## 底层
@@ -223,6 +227,11 @@ people.sort(Comparator.comparingInt(p -> p.age));
 
 //list配合map使用 如果是新值则新建一个ArrayList并将索引放入list中， lambda表达式,
 map.computeIfAbsent(nums[i], k -> new ArrayList<>()).add(i);
+
+// 初始化一个长度为26的列表 groups
+// 每个元素初始化为一个新的 ArrayList，lambda表达式
+List<Integer> groups = new ArrayList(26);
+Arrays.setAll(groups, i -> new ArrayList<>());
 ```
 
 # LinkList
@@ -250,8 +259,17 @@ String的方法
 //字符串转化为字符数组
 char[] ch = str.toCharArray();
 
-//判断字符串中是否存在某个字符个数是否>=0
-boolean isVowel = str.indexOf(b) >= 0;
+// 判断 str 中是否包含子串 targetStr
+// jdk 底层实现是双层循环匹配（朴素匹配算法），即在 str 中逐字符查找 targetStr 的第一次出现位置
+// 若存在，返回其首次出现位置索引 >= 0；否则返回 -1
+boolean isVowel = str.indexOf(targetStr) >= 0;
+
+//Sring转StringBuilder
+StringBuilder sb = new StringBuilder(str);
+
+// 判断 str 中是否包含子串 targetStr
+// String.contains 本质调用了 indexOf，判断 indexOf(targetStr) 是否 >= 0
+boolean isContains = str.contains(targetStr);
 ```
 
 
@@ -335,6 +353,9 @@ sb.deleteChatAt(0);
 
 //清空stringBuilder
 sb.setLength(0);
+
+//删除sb中特定位置的字符，循环慎用！
+sb.deleteCharAt(i);
 ```
 
 ![img](dataStructure.assets/image-20250501113738540.png)
